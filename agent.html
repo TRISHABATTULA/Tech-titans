@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusAI | Event Planning</title>
+
+    <link rel="stylesheet" href="agent.css">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+
+        <div>
+            <h1>CampusAI</h1>
+            <p>Event Operations OS</p>
+        </div>
+    </div>
+
+    <nav>
+
+        <button class="nav-btn active" data-section="dashboard">
+            ⌂ <span>Command Center</span>
+        </button>
+
+        <button class="nav-btn" data-section="planner">
+            ✦ <span>AI Event Planner</span>
+        </button>
+
+        <button class="nav-btn" data-section="agents">
+            ◈ <span>Agent Network</span>
+        </button>
+
+        <button class="nav-btn" data-section="schedule">
+            ◷ <span>Schedule</span>
+        </button>
+
+        <button class="nav-btn" data-section="resources">
+            ▣ <span>Resources</span>
+        </button>
+
+        <button class="nav-btn" data-section="conflicts">
+            ⚠ <span>Conflicts</span>
+        </button>
+
+        <button class="nav-btn" data-section="tasks">
+            ✓ <span>Tasks</span>
+        </button>
+
+        <button class="nav-btn" data-section="readiness">
+            ◉ <span>Readiness</span>
+        </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="system-status">
+            <span class="green-dot"></span>
+
+            <div>
+                <b>System Operational</b>
+                <small>All agents connected</small>
+            </div>
+        </div>
+
+        <div class="admin">
+            <div class="avatar">A</div>
+
+            <div>
+                <b>Event Admin</b>
+                <small>Human approval enabled</small>
+            </div>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <header class="topbar">
+
+        <div>
+            <p class="eyebrow">CAMPUS OPERATIONS / AI CONTROL</p>
+            <h2>Command Center</h2>
+        </div>
+
+        <div class="top-right">
+
+            <span id="clock"></span>
+
+            <button class="btn primary" id="newEventBtn">
+                + New Event
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboard" class="page active">
+
+        <div class="hero">
+
+            <div class="hero-content">
+
+                <span class="live-pill">
+                    ● LIVE • AI HACKATHON 2026
+                </span>
+
+                <h1>
+                    Plan the event.<br>
+                    <span>Let AI handle the complexity.</span>
+                </h1>
+
+                <p>
+                    Convert natural-language event requirements into
+                    an operational plan, coordinate specialized agents,
+                    detect conflicts and dynamically replan.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button class="btn primary" id="runAgentsBtn">
+                        ▶ Run All Agents
+                    </button>
+
+                    <button class="btn secondary" id="replanBtn">
+                        ↻ Simulate Replan
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="ai-orb">
+                <div class="orb-ring ring1"></div>
+                <div class="orb-ring ring2"></div>
+                <div class="orb-ring ring3"></div>
+
+                <div class="orb-center">
+                    AI
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- METRICS -->
+
+        <div class="metrics">
+
+            <div class="metric">
+                <p>Event Readiness</p>
+                <strong id="readinessMetric">92%</strong>
+                <span class="success">↑ Operational</span>
+            </div>
+
+            <div class="metric">
+                <p>Active Agents</p>
+                <strong id="activeMetric">0 / 7</strong>
+                <span>Ready to run</span>
+            </div>
+
+            <div class="metric">
+                <p>Open Conflicts</p>
+                <strong id="conflictMetric">2</strong>
+                <span class="warning">1 high priority</span>
+            </div>
+
+            <div class="metric">
+                <p>Tasks Completed</p>
+                <strong id="taskMetric">3 / 5</strong>
+                <span class="success">60% complete</span>
+            </div>
+
+        </div>
+
+
+        <!-- AGENT FLOW -->
+
+        <div class="dashboard-grid">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <p class="eyebrow">ORCHESTRATION</p>
+                        <h3>Agent Control Plane</h3>
+                    </div>
+
+                    <span class="success">● LIVE</span>
+
+                </div>
+
+                <div id="agentFlow"></div>
+
+            </div>
+
+
+            <!-- TIMELINE -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <p class="eyebrow">TODAY</p>
+                        <h3>Operational Timeline</h3>
+                    </div>
+
+                </div>
+
+                <div id="timeline"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PLANNER ================= -->
+
+    <section id="planner" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">NATURAL LANGUAGE INTAKE</p>
+
+            <h1>AI Event Planner</h1>
+
+            <p>
+                Describe your event and let AI generate the operational plan.
+            </p>
+
+        </div>
+
+
+        <div class="planner-grid">
+
+            <div class="card">
+
+                <label>
+                    Event Requirements
+                </label>
+
+                <textarea id="requirements">Organize a 2-day AI hackathon for 150 students. We need an auditorium, computer labs, projectors, 15 volunteers, lunch, judges and a closing ceremony.</textarea>
+
+                <div class="chips">
+
+                    <span>Hackathon</span>
+                    <span>150 attendees</span>
+                    <span>2 days</span>
+                    <span>15 volunteers</span>
+
+                </div>
+
+                <button class="btn primary full" id="generateBtn">
+                    ✦ Generate Operational Plan
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h3>Generated Plan</h3>
+
+                    <span class="ready">
+                        READY
+                    </span>
+
+                </div>
+
+                <div id="planOutput"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= AGENTS ================= -->
+
+    <section id="agents" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">
+                MULTI-AGENT ORCHESTRATION
+            </p>
+
+            <h1>Intelligent Agent Network</h1>
+
+            <p>
+                Specialized AI agents collaborate to plan and operate campus events.
+            </p>
+
+        </div>
+
+        <div id="agentCards" class="agent-grid"></div>
+
+    </section>
+
+
+    <!-- ================= SCHEDULE ================= -->
+
+    <section id="schedule" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">SCHEDULING</p>
+
+            <h1>Event Schedule</h1>
+
+            <p>
+                AI-generated timetable with venue and team assignments.
+            </p>
+
+        </div>
+
+        <div class="card table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Time</th>
+                        <th>Activity</th>
+                        <th>Venue</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="scheduleTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RESOURCES ================= -->
+
+    <section id="resources" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">RESOURCE MANAGEMENT</p>
+
+            <h1>Resources</h1>
+
+            <p>
+                Equipment and support resources planned for the event.
+            </p>
+
+        </div>
+
+        <div id="resourceGrid" class="resource-grid"></div>
+
+    </section>
+
+
+    <!-- ================= CONFLICTS ================= -->
+
+    <section id="conflicts" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">CONSTRAINT MONITORING</p>
+
+            <h1>Conflict Detection</h1>
+
+            <p>
+                AI detects and recommends solutions for operational conflicts.
+            </p>
+
+        </div>
+
+        <div id="conflictList"></div>
+
+    </section>
+
+
+    <!-- ================= TASKS ================= -->
+
+    <section id="tasks" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">TASK DELEGATION</p>
+
+            <h1>Tasks & Deadlines</h1>
+
+            <p>
+                Track event tasks and delegated teams.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div id="taskList"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= READINESS ================= -->
+
+    <section id="readiness" class="page">
+
+        <div class="section-title">
+
+            <p class="eyebrow">PRE-FLIGHT CHECK</p>
+
+            <h1>Event Readiness</h1>
+
+            <p>
+                AI-powered event readiness and approval monitoring.
+            </p>
+
+        </div>
+
+        <div class="readiness-grid">
+
+            <div class="card score-card">
+
+                <div class="score-circle">
+
+                    <strong id="scoreValue">
+                        92
+                    </strong>
+
+                    <span>/100</span>
+
+                </div>
+
+                <h3 id="readinessTitle">
+                    Event is nearly ready
+                </h3>
+
+                <p>
+                    Resolve remaining conflicts and complete approvals.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div id="checklist"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast"></div>
+
+
+<!-- ================= NEW EVENT MODAL ================= -->
+
+<div id="modal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <button class="close" id="closeModal">
+            ×
+        </button>
+
+        <p class="eyebrow">NEW EVENT</p>
+
+        <h2>Create Campus Event</h2>
+
+        <label>
+            Event Name
+            <input id="eventName" value="AI Hackathon 2026">
+        </label>
+
+        <label>
+            Participants
+            <input id="eventPeople" type="number" value="150">
+        </label>
+
+        <label>
+            Duration
+            <input id="eventDays" value="2 days">
+        </label>
+
+        <button class="btn primary full" id="createEventBtn">
+            Create Event
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
